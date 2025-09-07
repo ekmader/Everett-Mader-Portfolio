@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Place of Design — Portfolio</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <a href="#" class="brand-name">Everett Mader</a>
+    </div>
+
+    <nav class="main-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#info">Info</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1 class="hero-title">This here is a habitat of design work.</h1>
+        <p class="hero-sub">A practice in branding, art direction, and illustration. Forgetting not, all of the other curiosities in between.</p>
+      </div>
+    </section>
+
+    <section id="work" class="projects">
+      <!-- Project card template -->
+      <!-- Replace the <img> src with your production thumbnails -->
+      <article class="project-card">
+        <a href="#" class="project-link">
+          <div class="thumb">
+            <img src="placeholder-1.jpg" alt="Project thumbnail 1" />
+          </div>
+          <div class="meta">
+            <h3 class="project-title">Patagonia 50: What's Next?</h3>
+            <p class="project-role">Art Direction, Design Lead</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="project-card">
+        <a href="#" class="project-link">
+          <div class="thumb">
+            <img src="placeholder-2.jpg" alt="Project thumbnail 2" />
+          </div>
+          <div class="meta">
+            <h3 class="project-title">Sideyard Shrubs</h3>
+            <p class="project-role">Brand Identity, Packaging</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="project-card">
+        <a href="#" class="project-link">
+          <div class="thumb">
+            <img src="placeholder-3.jpg" alt="Project thumbnail 3" />
+          </div>
+          <div class="meta">
+            <h3 class="project-title">Still Vibrato</h3>
+            <p class="project-role">Packaging</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- duplicate project-card blocks to fill out the grid -->
+      <article class="project-card">
+        <a class="project-link" href="#">
+          <div class="thumb"><img src="placeholder-4.jpg" alt="thumb" /></div>
+          <div class="meta">
+            <h3 class="project-title">Mountainfilm</h3>
+            <p class="project-role">Brand Identity</p>
+          </div>
+        </a>
+      </article>
+
+      <article class="project-card">
+        <a class="project-link" href="#">
+          <div class="thumb"><img src="placeholder-5.jpg" alt="thumb" /></div>
+          <div class="meta">
+            <h3 class="project-title">Valley of Time</h3>
+            <p class="project-role">Project type</p>
+          </div>
+        </a>
+      </article>
+
+      <!-- Add more cards as needed -->
+    </section>
+
+    <section id="info" class="info">
+      <h2>Info</h2>
+      <p>Contact, resume, and short bio go here.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© <span id="year"></span> Place of Design</small>
+  </footer>
+
+  <script>
+    // small helper: set year and enable smooth scrolling behavior for internal links
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (href.length > 1) {
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
