@@ -255,3 +255,42 @@ ul{margin:0;padding:0;list-style:none}
   .project-info-right { order: 1; }
 }
 /* --- IGNORE --- */
+
+/* === Global Dark Theme === */
+body {
+  background-color: black; /* all sections black */
+  color: white;            /* all text white */
+  margin: 0;
+  font-family: sans-serif; /* optional: cleaner text */
+}
+
+/* Ensure all section backgrounds inherit black */
+section, header, footer, main {
+  background-color: black;
+  color: white;
+}
+
+/* Links */
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Images stay normal */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  background: transparent; /* prevents any weird fill */
+}
+
+/* Footer alignment */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+}
+/* End Global Dark Theme */
