@@ -18,18 +18,29 @@ a{color:inherit;text-decoration:none}
 ul{margin:0;padding:0;list-style:none}
 
 /* Header */
-.site-header{
-  position:sticky;
-  top:0;
-  z-index:30;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:var(--gap);
-  padding:20px clamp(18px,4vw,40px);
-  background:linear-gradient(to bottom, rgba(71, 11, 11, 0.95), rgba(255,255,255,0.6));
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(0,0,0,0.04);
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+  padding: 20px clamp(18px, 4vw, 40px);
+  background: transparent; /* fully transparent */
+  border-bottom: none;     /* remove any borders */
+}
+
+.brand-name,
+.main-nav a {
+  color: white;                /* text stays visible */
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); /* subtle shadow for readability */
+}
+
+.main-nav a:hover {
+  text-decoration: none;       /* remove underline on hover */
+}
+
 }
 .brand-name{
   font-weight:700;
