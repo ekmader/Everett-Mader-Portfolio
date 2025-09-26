@@ -197,3 +197,46 @@ ul{margin:0;padding:0;list-style:none}
     font-size: clamp(12px, 3vw, 16px);
   }
 }
+
+/* Project detail info section */
+.project-info {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* left 1/3, right 2/3 */
+  gap: 40px;
+  background: #000;
+  color: #fff;
+  padding: 60px clamp(20px, 6vw, 80px);
+}
+
+.project-info-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.project-name {
+  font-size: 1.8rem;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+
+.project-sub {
+  font-size: 1rem;
+  font-style: italic;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.project-info-right {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+/* Responsive stack for smaller screens */
+@media (max-width: 800px) {
+  .project-info {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
