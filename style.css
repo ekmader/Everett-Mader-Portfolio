@@ -128,7 +128,7 @@ ul{margin:0;padding:0;list-style:none}
 
 /* Project hero section */
 .project-hero {
-  position: relative;
+  position: relative;       /* anchor the gradient */
   width: 100%;
   margin-bottom: var(--gap);
   overflow: hidden;
@@ -137,26 +137,28 @@ ul{margin:0;padding:0;list-style:none}
 .project-main-img {
   display: block;
   width: 100%;
+  height: auto;
   max-height: 80vh;
   object-fit: cover;
 }
 
-/* Gradient band across the top */
+/* Gradient band — stays inside .project-hero only */
 .project-hero::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 40%; /* adjust how tall the band is */
+  width: 100%;
+  height: 40%; /* gradient covers only the top portion of the image */
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.55) 0%,   /* stronger at top */
-    rgba(0,0,0,0.0) 100%   /* fades smoothly into image */
+    rgba(0, 0, 0, 0.55) 0%, 
+    rgba(0, 0, 0, 0.0) 100%
   );
-  z-index: 1; /* stays under text */
+  z-index: 1; /* sits under text */
   pointer-events: none;
 }
+
 
 /* Text on top of gradient */
 .project-hero-text {
