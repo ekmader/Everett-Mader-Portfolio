@@ -27,7 +27,7 @@ ul{margin:0;padding:0;list-style:none}
   justify-content:space-between;
   gap:var(--gap);
   padding:20px clamp(18px,4vw,40px);
-  background:linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0.6));
+  background:linear-gradient(to bottom, rgba(71, 11, 11, 0.95), rgba(255,255,255,0.6));
   backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(0,0,0,0.04);
 }
@@ -131,46 +131,46 @@ ul{margin:0;padding:0;list-style:none}
   position: relative;
   width: 100%;
   margin-bottom: var(--gap);
-  overflow: hidden; /* keeps overlay bound to hero */
+  overflow: hidden;
 }
 
 .project-main-img {
   display: block;
   width: 100%;
-  max-height: 80vh;   /* prevent overly tall hero images */
+  max-height: 80vh;
   object-fit: cover;
 }
 
-/* Overlay layer */
-.project-hero::after {
+/* Gradient band across the top */
+.project-hero::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%; /* adjust how tall the band is */
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.35) 0%,    /* softer at top */
-    rgba(0,0,0,0.55) 100%   /* stronger at bottom for text contrast */
+    rgba(0,0,0,0.55) 0%,   /* stronger at top */
+    rgba(0,0,0,0.0) 100%   /* fades smoothly into image */
   );
-  pointer-events: none; /* don’t block clicks */
+  z-index: 1; /* stays under text */
+  pointer-events: none;
 }
 
+/* Text on top of gradient */
 .project-hero-text {
   position: absolute;
-  bottom: 12%;
-  left: clamp(18px, 6vw, 60px); /* aligns with body padding */
+  top: clamp(18px, 6vw, 60px);
+  left: clamp(18px, 6vw, 60px);
   color: #fff;
   max-width: 70ch;
-  transition: opacity 0.4s ease, transform 0.4s ease; /* fade */
-}
-
-.project-hero-text.fade-out {
-  opacity: 0;
-  transform: translateY(-10px);
+  z-index: 2; /* ensure text sits above gradient */
 }
 
 .project-hero-text .project-title {
   font-size: clamp(28px, 6vw, 48px);
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;
   font-weight: 800;
   line-height: 1.1;
 }
@@ -180,9 +180,11 @@ ul{margin:0;padding:0;list-style:none}
   margin: 0;
   opacity: 0.9;
 }
+
+/* Responsive tweaks */
 @media (max-width: 600px) {
   .project-hero-text {
-    bottom: 8%;
+    top: 18px;
     left: 18px;
     right: 18px;
   }
