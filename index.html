@@ -7,18 +7,38 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <a href="#" class="brand-name">Everett Mader</a>
-    </div>
+<header class="site-header">
+  <div class="brand">
+    <a href="#" class="brand-name">Everett Mader</a>
+  </div>
 
-    <nav class="main-nav" aria-label="Primary">
-      <ul>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#info">Info</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- Hamburger Menu -->
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Slide-out Menu -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#info">Info</a></li>
+      <li><a href="#resume">Resume</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('active');
+});
+</script>
+
 
   <main>
     <section class="hero">
