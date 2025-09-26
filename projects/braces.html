@@ -12,19 +12,44 @@
   </header>
 
   <main class="project-detail">
-    <h1>An Abundance of Braces</h1>
-    <p class="project-role">Timber Frame Carpenter</p>
+    <!-- New hero section -->
+    <section class="project-hero">
+      <img 
+        src="../img/Scratch Builders Site Photo.jpeg" 
+        alt="Timber frame braces" 
+        class="project-main-img" 
+      />
+      <div class="project-hero-text">
+        <h1 class="project-title">An Abundance of Braces</h1>
+        <p class="project-role">Timber Frame Carpenter</p>
+      </div>
+    </section>
 
-    <img src="../img/Scratch Builders Site Photo.jpeg" alt="Timber frame braces" />
-
+    <!-- Info/content section -->
     <h2>About</h2>
-    <p>A timber framing project centered on structural joinery and brace design during a collaborative build.</p>
+    <p>
+      A timber framing project centered on structural joinery and brace design during a collaborative build.
+    </p>
   </main>
 
   <footer class="site-footer">
     <small>© <span id="year"></span> Hub of Fascination</small>
   </footer>
 
-  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fade out hero text on scroll
+    window.addEventListener("scroll", () => {
+      const heroText = document.querySelector(".project-hero-text");
+      if (!heroText) return;
+      const scrollPos = window.scrollY;
+      if (scrollPos > 100) {
+        heroText.classList.add("fade-out");
+      } else {
+        heroText.classList.remove("fade-out");
+      }
+    });
+  </script>
 </body>
 </html>
