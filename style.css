@@ -47,7 +47,17 @@ ul{margin:0;padding:0;list-style:none}
   align-items:center;
   justify-content:center;
 }
+
 .hero-inner{max-width:var(--max-width);width:100%}
+
+.hero-title,
+.hero-sub {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;  /* keep text left-aligned */
+  max-width: 70ch;   /* keeps both flush and centered as a block */
+}
+
 .hero-title{
   font-size: clamp(28px,6vw,56px);
   margin:0 0 14px 0;
@@ -55,14 +65,15 @@ ul{margin:0;padding:0;list-style:none}
   font-weight:800;
   letter-spacing:-0.01em;
 }
+
 .hero-sub{
   margin:0;
   font-size: clamp(14px,2.6vw,18px);
   color:var(--muted);
-  max-width:70ch;
   white-space:normal;
   opacity:0.95;
 }
+
 
 /* Projects grid */
 .projects{
