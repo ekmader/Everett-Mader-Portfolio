@@ -87,7 +87,7 @@ ul{margin:0;padding:0;list-style:none}
 
 .project-card {
   background: transparent;
-  border-radius: 6px;
+  border-radius: 0; /* no rounding */
   overflow: hidden;
 }
 
