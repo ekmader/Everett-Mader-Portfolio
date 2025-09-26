@@ -92,15 +92,23 @@ ul{margin:0;padding:0;list-style:none}
   transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
 }
 .project-link{display:block}
-.thumb{
-  width:100%;
-  aspect-ratio: 16/11;
-  overflow:hidden;
-  background:linear-gradient(180deg,#e9e9e9,#f6f6f6);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.thumb {
+  width: 100%;
+  aspect-ratio: 16/9;   /* force all thumbnails to be 16:9 */
+  overflow: hidden;
+  background: black;     /* black background looks cleaner with your dark theme */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* fills the frame, crops excess */
+  display: block;
+}
+
 .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.9,.2,1)}
 .meta{padding:14px 12px}
 .project-title{margin:0;font-size:1rem;font-weight:700;line-height:1.1}
