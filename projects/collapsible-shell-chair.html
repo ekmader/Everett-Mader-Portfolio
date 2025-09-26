@@ -13,26 +13,38 @@
     </div>
   </header>
 
-  <main>
-    <section class="project-detail">
-      <h1>Collapsible Shell Chair</h1>
-      <p class="project-role">Design Lead, Lead Carpenter</p>
-
-      <img src="../img/ShellChair.jpeg" alt="Shell Chair main image" />
-
-      <h2>About the Project</h2>
-      <p>This collapsible plywood chair was designed with portability and simplicity in mind. Inspired by molded plywood forms, it functions as both a practical travel chair and an exploration of joinery without hardware.</p>
-
-      <h2>Gallery</h2>
-      <img src="../img/ShellChair-detail1.jpeg" alt="Detail photo 1" />
-      <img src="../img/ShellChair-detail2.jpeg" alt="Detail photo 2" />
-
-      <h2>Video</h2>
-      <video controls width="600">
-        <source src="../img/ShellChair-demo.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+  <main class="project-detail">
+    <!-- Hero section -->
+    <section class="project-hero">
+      <img 
+        src="../img/ShellChair.jpeg" 
+        alt="Shell Chair main image" 
+        class="project-main-img" 
+      />
+      <div class="project-hero-text">
+        <h1 class="project-title">Collapsible Shell Chair</h1>
+        <p class="project-role">Design Lead, Lead Carpenter</p>
+      </div>
     </section>
+
+    <!-- About -->
+    <h2>About the Project</h2>
+    <p>
+      This collapsible plywood chair was designed with portability and simplicity in mind. 
+      Inspired by molded plywood forms, it functions as both a practical travel chair and an exploration of joinery without hardware.
+    </p>
+
+    <!-- Gallery -->
+    <h2>Gallery</h2>
+    <img src="../img/ShellChair-detail1.jpeg" alt="Detail photo 1" />
+    <img src="../img/ShellChair-detail2.jpeg" alt="Detail photo 2" />
+
+    <!-- Video -->
+    <h2>Video</h2>
+    <video controls width="100%">
+      <source src="../img/ShellChair-demo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </main>
 
   <footer class="site-footer">
@@ -41,6 +53,18 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Fade out hero text on scroll
+    window.addEventListener("scroll", () => {
+      const heroText = document.querySelector(".project-hero-text");
+      if (!heroText) return;
+      const scrollPos = window.scrollY;
+      if (scrollPos > 100) {
+        heroText.classList.add("fade-out");
+      } else {
+        heroText.classList.remove("fade-out");
+      }
+    });
   </script>
 </body>
 </html>
