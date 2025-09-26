@@ -198,22 +198,32 @@ ul{margin:0;padding:0;list-style:none}
   }
 }
 
-/* Project detail info section */
+/* Project detail info section — full-bleed background with centered content */
 .project-info {
+  width: 100%;
+  background: #000;
+  color: #fff;
+}
+
+/* inner container keeps content constrained and padded */
+.project-info-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 2fr; /* left 1/3, right 2/3 */
   gap: 40px;
-  background: #000;
-  color: #fff;
   padding: 60px clamp(20px, 6vw, 80px);
+  align-items: start;
 }
 
+/* left column */
 .project-info-left {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
+/* title + italic subheader */
 .project-name {
   font-size: 1.8rem;
   margin: 0 0 10px 0;
@@ -224,19 +234,24 @@ ul{margin:0;padding:0;list-style:none}
   font-size: 1rem;
   font-style: italic;
   margin: 0;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
+/* right column body text */
 .project-info-right {
   font-size: 1rem;
   line-height: 1.6;
   max-width: 70ch;
 }
 
-/* Responsive stack for smaller screens */
+/* responsive: stack on smaller screens */
 @media (max-width: 800px) {
-  .project-info {
+  .project-info-inner {
     grid-template-columns: 1fr;
     gap: 20px;
+    padding: 40px clamp(18px, 6vw, 40px);
   }
+  .project-info-left { order: 0; }
+  .project-info-right { order: 1; }
 }
+/* --- IGNORE --- */
