@@ -125,3 +125,71 @@ ul{margin:0;padding:0;list-style:none}
   .site-header{padding:12px 16px}
   .main-nav{display:none}
 }
+
+/* Project hero section */
+.project-hero {
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--gap);
+  overflow: hidden; /* keeps overlay bound to hero */
+}
+
+.project-main-img {
+  display: block;
+  width: 100%;
+  max-height: 80vh;   /* prevent overly tall hero images */
+  object-fit: cover;
+}
+
+/* Overlay layer */
+.project-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.35) 0%,    /* softer at top */
+    rgba(0,0,0,0.55) 100%   /* stronger at bottom for text contrast */
+  );
+  pointer-events: none; /* don’t block clicks */
+}
+
+.project-hero-text {
+  position: absolute;
+  bottom: 12%;
+  left: clamp(18px, 6vw, 60px); /* aligns with body padding */
+  color: #fff;
+  max-width: 70ch;
+  transition: opacity 0.4s ease, transform 0.4s ease; /* fade */
+}
+
+.project-hero-text.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.project-hero-text .project-title {
+  font-size: clamp(28px, 6vw, 48px);
+  margin: 0 0 10px 0;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.project-hero-text .project-role {
+  font-size: clamp(14px, 2.6vw, 20px);
+  margin: 0;
+  opacity: 0.9;
+}
+@media (max-width: 600px) {
+  .project-hero-text {
+    bottom: 8%;
+    left: 18px;
+    right: 18px;
+  }
+  .project-hero-text .project-title {
+    font-size: clamp(22px, 5vw, 32px);
+  }
+  .project-hero-text .project-role {
+    font-size: clamp(12px, 3vw, 16px);
+  }
+}
