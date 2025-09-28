@@ -28,15 +28,25 @@
     </ul>
   </nav>
 </header>
+<div class="menu-overlay"></div>
+
 
 <script>
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const overlay = document.querySelector('.menu-overlay');
 
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  mobileMenu.classList.toggle('active');
+  document.body.classList.toggle('menu-active');
+  hamburger.classList.toggle('open');
 });
+
+// Allow clicking the overlay to close the menu
+overlay.addEventListener('click', () => {
+  document.body.classList.remove('menu-active');
+  hamburger.classList.remove('open');
+});
+
 </script>
 
 
@@ -116,7 +126,7 @@ hamburger.addEventListener('click', () => {
       <h3>About Me</h3>
       <p>I'm fascinated by the ways people and their environments shape one another. With a background in neuroscience and architectural studies, I thrive at the intersection of strategy, design, and human behavior. I am constantly asking how ideas from one field can spark innovation in another.</p>
       <h3>Send me a good email.</h3>
-      <p>Email: Everettkmader@gmail.com <a href="mailto:everettkmader@gmail.com">
+      <p>Everettkmader@gmail.com <a href="mailto:everettkmader@gmail.com">
     </section>
   </main>
 
