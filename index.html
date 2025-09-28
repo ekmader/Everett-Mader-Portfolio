@@ -37,15 +37,18 @@ const mobileMenu = document.querySelector('.mobile-menu');
 const overlay = document.querySelector('.menu-overlay');
 
 hamburger.addEventListener('click', () => {
-  document.body.classList.toggle('menu-active');
-  hamburger.classList.toggle('open');
+  hamburger.classList.toggle('active');       // animate hamburger → X
+  mobileMenu.classList.toggle('active');      // slide menu in/out
+  document.body.classList.toggle('menu-active'); // show overlay
 });
 
-// Allow clicking the overlay to close the menu
+// Close menu if overlay is clicked
 overlay.addEventListener('click', () => {
+  hamburger.classList.remove('active');
+  mobileMenu.classList.remove('active');
   document.body.classList.remove('menu-active');
-  hamburger.classList.remove('open');
 });
+
 
 </script>
 
