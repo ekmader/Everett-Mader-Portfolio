@@ -452,3 +452,32 @@ body.menu-active .menu-overlay {
   box-shadow: -4px 0 12px rgba(0, 0, 0, 0.8); /* adds depth */
   z-index: 60; /* stays above overlay */
 }
+.references {
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15); /* faint line */
+}
+
+.references .ref-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #aaa;  /* muted */
+  margin-bottom: 8px;
+}
+
+.references ul {
+  list-style-type: none; /* no bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.references li {
+  font-size: 0.85rem;
+  color: #ccc;  /* softer text */
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.references li:last-child {
+  margin-bottom: 0; /* no extra space on last item */
+}
