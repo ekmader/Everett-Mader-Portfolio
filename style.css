@@ -370,7 +370,8 @@ img {
   width: 100%;
   background: #fff;
   border-radius: 2px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; opacity 0.3s ease;
+  transform-origin: center;
 }
 
 /* When menu is active, animate into X */
