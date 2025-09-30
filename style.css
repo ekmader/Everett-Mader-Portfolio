@@ -354,12 +354,13 @@ img {
 
 /* Hamburger container */
 .hamburger {
+  width: 30px;
+  height: 22px;
+  position: relative;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 25px;
-  height: 20px;
-  cursor: pointer;
   z-index: 70; /* above everything */
 }
 
@@ -367,12 +368,12 @@ img {
   display: block;
   height: 3px;
   width: 100%;
-  background: white;
+  background: #fff;
   border-radius: 2px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
-/* Transform to X when active */
+/* When menu is active, animate into X */
 .hamburger.active span:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
@@ -385,26 +386,30 @@ img {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
+
+
 /* Mobile slide-out menu */
 .mobile-menu {
   position: fixed;
   top: 0;
-  right: -250px; /* hidden off-screen initially */
+  right: -250px;
   width: 250px;
   height: 100vh;
-  background: black;
-  color: white;
+  background: #111;
   transition: right 0.3s ease-in-out;
-  padding: 80px 20px; /* leave space for header */
+  padding: 80px 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  z-index: 40;
+  z-index: 60; /* higher than overlay */
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.8);
 }
 
 .mobile-menu.active {
-  right: 0; /* slide in */
+  right: 0;
 }
+
 
 .mobile-menu ul {
   list-style: none;
@@ -430,28 +435,24 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100%;   /* full screen by default */
   height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  background: rgba(0, 0, 0, 0.6);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease;
-  z-index: 50; /* just below the menu */
+  z-index: 50; /* below the menu */
 }
 
 /* Show overlay when menu is active */
 body.menu-active .menu-overlay {
   opacity: 1;
   visibility: visible;
+  right: 250px;  /* stop at menu edge */
+  width: calc(100% - 250px);
 }
 
-/* Slide-out menu adjustments */
-.mobile-menu {
-  background: #111; /* slightly lighter than page */
-  border-left: 1px solid rgba(255, 255, 255, 0.1); /* thin divider */
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.8); /* adds depth */
-  z-index: 60; /* stays above overlay */
-}
+
 .references {
   margin-top: 30px;
   padding-top: 15px;
