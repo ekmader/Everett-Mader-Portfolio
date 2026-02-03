@@ -12,6 +12,9 @@
   -moz-osx-font-smoothing:grayscale;
 }
 
+/* TEDx brand color for any occurrences of the text */
+.tedx { color: #EB0028; }
+
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;background:var(--bg);color:var(--text)}
 a{color:inherit;text-decoration:none}
