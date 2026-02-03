@@ -641,14 +641,6 @@ body.menu-active .menu-overlay {
   gap: 40px;
 }
 
-/* Default two-column checkered layout; alternate columns for even rows */
-.gallery-row {
-  grid-template-columns: 1fr 1.4fr;
-}
-
-.gallery-row:nth-child(even) {
-  grid-template-columns: 1.4fr 1fr;
-}
 
 /* Row 1: Text next to horizontal image */
 .gallery-row-1 {
@@ -757,7 +749,7 @@ body.menu-active .menu-overlay {
 }
 
 .gallery-image-square {
-  aspect-ratio: 4 / 3; /* make formerly-square images rectangular */
+  aspect-ratio: 1 / 1;
 }
 
 /* Two side-by-side text columns for initial block */
@@ -785,42 +777,14 @@ body.menu-active .menu-overlay {
 .stacked-images .gallery-image-square {
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
 }
 
-/* Make the lower stacked horizontal image bleed full-viewport width */
+/* stacked images: keep default contained sizing */
 .stacked-images .gallery-image-horizontal {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+  width: 100%;
   height: auto;
   aspect-ratio: 16 / 9;
-}
-
-/* Override the image sizing for the full-bleed image */
-.stacked-images .gallery-image-horizontal img {
-  width: 100vw;
-  height: auto;
-  object-fit: cover;
-  display: block;
-}
-
-/* Ensure gallery images can host absolutely positioned headings */
-.gallery-image {
-  position: relative;
-}
-
-/* Headings over images should be transparent background and borderless */
-.gallery-image h3 {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  margin: 0;
-  padding: 6px 10px;
-  color: rgba(255,255,255,0.95);
-  background: transparent;
-  border: none;
-  z-index: 3;
-  font-weight: 700;
 }
 
 /* Row 3 special height matching */
