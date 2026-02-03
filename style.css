@@ -483,3 +483,133 @@ body.menu-active .menu-overlay {
 .references li:last-child {
   margin-bottom: 0; /* no extra space on last item */
 }
+
+/* === Content Sections (Image + Text Layout) === */
+
+.content-section {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  padding: 60px clamp(20px, 6vw, 80px);
+}
+
+.content-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Image next to text layout */
+.image-text-row {
+  padding: 60px clamp(20px, 6vw, 80px);
+}
+
+.image-text-row .content-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.image-text-row.reverse .content-inner {
+  grid-template-columns: 1fr 1fr;
+}
+
+.image-text-row.reverse .section-image {
+  order: 2;
+}
+
+.image-text-row.reverse .section-text {
+  order: 1;
+}
+
+.section-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.section-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-text h2 {
+  font-size: clamp(24px, 4vw, 32px);
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.section-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.95;
+  max-width: 60ch;
+}
+
+/* Full-width image section */
+.full-width-image {
+  padding: 40px clamp(20px, 6vw, 80px);
+}
+
+.full-width-image .content-inner {
+  max-width: 100%;
+}
+
+.full-width-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Vertical video section with appropriate framing */
+.video-section {
+  padding: 60px clamp(20px, 6vw, 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 500px; /* constrain vertical video width */
+  margin: 0 auto;
+}
+
+.video-container video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #111;
+}
+
+/* Responsive adjustments */
+@media (max-width: 800px) {
+  .image-text-row .content-inner,
+  .image-text-row.reverse .content-inner {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .image-text-row.reverse .section-image,
+  .image-text-row.reverse .section-text {
+    order: unset;
+  }
+
+  .section-text h2 {
+    font-size: clamp(20px, 3vw, 26px);
+  }
+
+  .section-text p {
+    font-size: 0.95rem;
+  }
+
+  .content-section {
+    padding: 40px clamp(18px, 4vw, 40px);
+  }
+}
