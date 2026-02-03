@@ -704,8 +704,18 @@ body.menu-active .menu-overlay {
   max-width: 60ch;
 }
 
+.gallery-text h2 {
+  margin: 0 0 0.6rem 0;
+  font-size: clamp(20px, 3vw, 26px);
+  line-height: 1.15;
+}
+
 .gallery-text p {
-  margin: 0;
+  margin: 0 0 1.05rem 0; /* distinct paragraph spacing for readability */
+}
+
+.gallery-text p:last-child {
+  margin-bottom: 0; /* avoid extra space after final paragraph */
 }
 
 /* Gallery images */
