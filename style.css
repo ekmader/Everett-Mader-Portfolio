@@ -636,9 +636,18 @@ body.menu-active .menu-overlay {
 
 /* Gallery rows */
 .gallery-row {
-  display: grid;
+  display: flex;
   align-items: center;
   gap: 40px;
+  flex-wrap: wrap;
+}
+.gallery-row .gallery-text,
+.gallery-row .gallery-image {
+  flex: 1 1 50%;
+  min-width: 260px;
+}
+.gallery-row:nth-child(even) {
+  flex-direction: row-reverse;
 }
 
 
@@ -725,18 +734,25 @@ body.menu-active .menu-overlay {
 /* Gallery images */
 .gallery-image {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  height: auto;
+  overflow: visible;
   border-radius: 0;
   background: #1a1a1a;
 }
 
 .gallery-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   display: block;
   border-radius: 0;
+}
+
+.gallery-image h3 {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: #fff;
+  display: block;
 }
 
 /* Image size ratios */
@@ -749,7 +765,7 @@ body.menu-active .menu-overlay {
 }
 
 .gallery-image-square {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 9;
 }
 
 /* Two side-by-side text columns for initial block */
@@ -777,7 +793,7 @@ body.menu-active .menu-overlay {
 .stacked-images .gallery-image-square {
   width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 16 / 9;
 }
 
 /* stacked images: keep default contained sizing */
@@ -891,5 +907,17 @@ body.menu-active .menu-overlay {
 
   .gallery-image-square {
     aspect-ratio: 1 / 1;
+  }
+
+  /* Ensure rows stack on narrow screens and don't reverse */
+  .gallery-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gallery-row .gallery-text,
+  .gallery-row .gallery-image {
+    flex: 1 1 100%;
+    min-width: auto;
   }
 }
