@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pinterest Brand Strategy</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><a href="../index.html" class="brand-name">Everett Mader</a></div>
+  </header>
+
+  <main class="project-detail">
+
+    <section class="project-hero">
+      <img src="../img/Front whole house.png" alt="Pinterest Brand Strategy cover" class="project-main-img" />
+      <div class="project-hero-text">
+        <h1 class="project-title">Pinterest Brand Strategy</h1>
+        <p class="project-role">Brand Strategy, UX + Creative Direction</p>
+      </div>
+    </section>
+
+    <section class="project-info">
+      <div class="project-info-inner">
+        <div class="project-info-left">
+          <h2 class="project-name">Pinterest Brand Strategy</h2>
+          <p class="project-sub"><em>27-slide narrative deck, mobile-friendly, interactive browsing experience.</em></p>
+        </div>
+        <div class="project-info-right">
+          <p>This project is built as an interactive slide deck experience designed to let a viewer “flip through” a presentation without downloading the file. It preserves layout, typography, and quick transitions while keeping navigation in the browser.</p>
+          <p>Best format: PDF can be loaded in-browser with a renderer (PDF.js), but highest performance and design control comes from an image-based slide sequence (PNG/JPEG per slide). If you already have a PDF, upload it as <code>projects/pinterest-brand-strategy.pdf</code> and the viewer will stream pages directly.</p>
+          <p>Next step: add the 27 slides as either a multi-page PDF or a dedicated image set, and update the <code>deckSource</code> path in the script below if you move it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-gallery">
+      <div class="gallery-container">
+        <h2>Slide Deck Viewer</h2>
+        <div class="pdf-deck">
+          <div class="pdf-controls">
+            <button id="prev-slide" aria-label="Previous slide">← Prev</button>
+            <span>Slide <strong id="page-num">1</strong> / <strong id="total-pages">27</strong></span>
+            <button id="next-slide" aria-label="Next slide">Next →</button>
+          </div>
+          <canvas id="pdf-canvas"></canvas>
+          <p class="alt-text" id="pdf-status">Loading 27 slides...</p>
+          <p class="alt-text">If your browser does not render PDFs via the built-in viewer, you can open the file directly: <a href="../projects/pinterest-brand-strategy.pdf" target="_blank">Open PDF</a>.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <small>© <span id="year"></span> Hub of Fascination</small>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.13.122/pdf.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const deckSource = '../projects/pinterest-brand-strategy.pdf';
+    const expectedTotal = 27;
+    const pageNumEl = document.getElementById('page-num');
+    const totalPagesEl = document.getElementById('total-pages');
+    const statusEl = document.getElementById('pdf-status');
+    const canvas = document.getElementById('pdf-canvas');
+    const ctx = canvas.getContext('2d');
+    let pdfDoc = null;
+    let currentPage = 1;
+    let isRendering = false;
+    let pendingPage = null;
+    const scale = 1.2;
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.13.122/pdf.worker.min.js';
+    totalPagesEl.textContent = expectedTotal;
+
+    function renderPage(pageNum) {
+      isRendering = true;
+      statusEl.textContent = `Rendering slide ${pageNum} / ${expectedTotal}...`;
+      pdfDoc.getPage(pageNum).then(page => {
+        const viewport = page.getViewport({ scale });
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const renderContext = { canvasContext: ctx, viewport };
+        const renderTask = page.render(renderContext);
+        renderTask.promise.then(() => {
+          isRendering = false;
+          pageNumEl.textContent = pageNum;
+          statusEl.textContent = '';
+          if (pendingPage !== null) {
+            renderPage(pendingPage);
+            pendingPage = null;
+          }
+        });
+      }).catch(err => {
+        statusEl.textContent = 'Could not load slide deck. Please confirm the PDF is in projects/pinterest-brand-strategy.pdf';
+        console.error(err);
+      });
+    }
+
+    function queueRender(pageNum) {
+      if (isRendering) {
+        pendingPage = pageNum;
+      } else {
+        renderPage(pageNum);
+      }
+    }
+
+    function showPage(offset) {
+      const target = currentPage + offset;
+      if (target < 1 || target > expectedTotal) return;
+      currentPage = target;
+      queueRender(currentPage);
+    }
+
+    document.getElementById('prev-slide').addEventListener('click', () => showPage(-1));
+    document.getElementById('next-slide').addEventListener('click', () => showPage(1));
+
+    pdfjsLib.getDocument(deckSource).promise.then(document => {
+      pdfDoc = document;
+      if (pdfDoc.numPages !== expectedTotal) {
+        totalPagesEl.textContent = pdfDoc.numPages;
+      }
+      currentPage = 1;
+      queueRender(currentPage);
+    }).catch(err => {
+      statusEl.textContent = 'Error loading PDF. Verify file path and format.';
+      console.error(err);
+    });
+
+    window.addEventListener('scroll', () => {
+      const heroText = document.querySelector('.project-hero-text');
+      if (!heroText) return;
+      if (window.scrollY > 100) heroText.classList.add('fade-out');
+      else heroText.classList.remove('fade-out');
+    });
+  </script>
+</body>
+</html>
