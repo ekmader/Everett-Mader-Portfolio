@@ -29,7 +29,7 @@
         </div>
         <div class="project-info-right">
           <p>This project is built as an interactive slide deck experience designed to let a viewer “flip through” a presentation without downloading a file. It preserves layout, typography, and quick transitions while keeping navigation in the browser.</p>
-          <p>Now using native image-based slide navigation: each slide is loaded from <code>img/pinterest/1.png</code> ... <code>img/pinterest/27.png</code>. The deck is fluid and mobile-friendly.</p>
+          <p>Now using native image-based slide navigation: each slide is loaded from <code>img/Pinterest/Pinterest Project/1.png</code> ... <code>img/Pinterest/Pinterest Project/27.png</code>. The deck is fluid and mobile-friendly.</p>
           <p>Next step: confirm all 27 numbered PNG files exist and adjust <code>totalSlides</code> / <code>imageFolder</code> in the embedded script if you rename and relocate the folder.</p>
         </div>
       </div>
@@ -42,7 +42,7 @@
           <div class="slide-deck-wrapper" id="slide-deck" aria-label="Slide deck viewer">
             <button class="nav-button nav-prev" id="prev-slide" aria-label="Previous slide">◀</button>
             <div class="slide-frame" id="slide-frame">
-              <img id="deck-image" src="../img/pinterest/1.png" alt="Slide 1 of 27" loading="lazy" />
+              <img id="deck-image" src="../img/Pinterest/Pinterest Project/1.png" alt="Slide 1 of 27" loading="lazy" />
               <div class="slide-overlay" id="slide-overlay">
                 <span id="slide-label">Slide 1 / 27</span>
               </div>
@@ -69,7 +69,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const totalSlides = 27;
-    const imageFolder = '../img/pinterest/';
+    const imageFolder = '../img/Pinterest/Pinterest Project/';
     let currentSlide = 1;
 
     const deckImage = document.getElementById('deck-image');
@@ -105,7 +105,7 @@
         deckImage.classList.remove('loading');
       };
       deckImage.onerror = () => {
-        statusEl.textContent = `Missing image for slide ${currentSlide}. Check terminal file names in img/pinterest/`;
+        statusEl.textContent = `Missing image for slide ${currentSlide}. Check terminal file names in img/Pinterest/Pinterest Project/`;
         deckImage.classList.remove('loading');
       };
       deckImage.src = src;
