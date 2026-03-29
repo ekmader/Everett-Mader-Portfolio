@@ -933,10 +933,30 @@ body.menu-active .menu-overlay {
 .pdf-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   margin-bottom: 12px;
   flex-wrap: wrap;
+}
+
+.page-jump {
+  display: inline-block;
+  font-size: 0.9rem;
+  margin-left: 8px;
+  margin-right: 2px;
+}
+
+#jump-to {
+  width: 70px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+#jump-to:focus {
+  outline: 2px solid rgba(255,255,255,0.6);
 }
 
 .pdf-controls button {

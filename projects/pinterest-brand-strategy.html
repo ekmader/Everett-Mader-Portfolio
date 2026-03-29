@@ -42,11 +42,14 @@
           <div class="pdf-controls">
             <button id="prev-slide" aria-label="Previous slide">← Prev</button>
             <span>Slide <strong id="page-num">1</strong> / <strong id="total-pages">27</strong></span>
+            <label class="page-jump" for="jump-to">Jump to</label>
+            <input id="jump-to" type="number" min="1" max="27" value="1" aria-label="Jump to slide" />
             <button id="next-slide" aria-label="Next slide">Next →</button>
+            <button id="fullscreen" aria-label="Toggle fullscreen">Fullscreen</button>
           </div>
           <canvas id="pdf-canvas"></canvas>
           <p class="alt-text" id="pdf-status">Loading 27 slides...</p>
-          <p class="alt-text">If your browser does not render PDFs via the built-in viewer, you can open the file directly: <a href="../projects/pinterest-brand-strategy.pdf" target="_blank">Open PDF</a>.</p>
+          <p class="alt-text">If your browser does not render PDFs via the built-in viewer, you can open the file directly: <a href="../img/Pinterest Brand Strategy All Slides.pdf" target="_blank">Open PDF</a>.</p>
         </div>
       </div>
     </section>
@@ -61,7 +64,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const deckSource = '../projects/pinterest-brand-strategy.pdf';
+    const deckSource = '../img/Pinterest Brand Strategy All Slides.pdf';
     const expectedTotal = 27;
     const pageNumEl = document.getElementById('page-num');
     const totalPagesEl = document.getElementById('total-pages');
@@ -123,12 +126,47 @@
       pdfDoc = document;
       if (pdfDoc.numPages !== expectedTotal) {
         totalPagesEl.textContent = pdfDoc.numPages;
+        document.getElementById('jump-to').max = pdfDoc.numPages;
       }
       currentPage = 1;
       queueRender(currentPage);
     }).catch(err => {
       statusEl.textContent = 'Error loading PDF. Verify file path and format.';
       console.error(err);
+    });
+
+    function setPage(pageNum) {
+      const total = pdfDoc ? pdfDoc.numPages : expectedTotal;
+      const valid = Math.min(Math.max(pageNum, 1), total);
+      currentPage = valid;
+      document.getElementById('jump-to').value = valid;
+      queueRender(valid);
+    }
+
+    document.getElementById('jump-to').addEventListener('change', (e) => {
+      setPage(Number(e.target.value));
+    });
+
+    document.body.addEventListener('keydown', (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (e.key === 'ArrowRight') {
+        showPage(1);
+      } else if (e.key === 'ArrowLeft') {
+        showPage(-1);
+      } else if (e.key === 'Home') {
+        setPage(1);
+      } else if (e.key === 'End') {
+        setPage(pdfDoc ? pdfDoc.numPages : expectedTotal);
+      }
+    });
+
+    document.getElementById('fullscreen').addEventListener('click', () => {
+      const node = document.querySelector('.pdf-deck');
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        node.requestFullscreen().catch(() => {});
+      }
     });
 
     window.addEventListener('scroll', () => {
