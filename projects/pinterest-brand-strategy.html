@@ -28,9 +28,9 @@
           <p class="project-sub"><em>27-slide narrative deck, mobile-friendly, interactive browsing experience.</em></p>
         </div>
         <div class="project-info-right">
-          <p>This project is built as an interactive slide deck experience designed to let a viewer “flip through” a presentation without downloading the file. It preserves layout, typography, and quick transitions while keeping navigation in the browser.</p>
-          <p>Best format: PDF can be loaded in-browser with a renderer (PDF.js), but highest performance and design control comes from an image-based slide sequence (PNG/JPEG per slide). If you already have a PDF, upload it as <code>projects/pinterest-brand-strategy.pdf</code> and the viewer will stream pages directly.</p>
-          <p>Next step: add the 27 slides as either a multi-page PDF or a dedicated image set, and update the <code>deckSource</code> path in the script below if you move it.</p>
+          <p>This project is built as an interactive slide deck experience designed to let a viewer “flip through” a presentation without downloading a file. It preserves layout, typography, and quick transitions while keeping navigation in the browser.</p>
+          <p>Now using native image-based slide navigation: each slide is loaded from <code>img/pinterest/1.png</code> ... <code>img/pinterest/27.png</code>. The deck is fluid and mobile-friendly.</p>
+          <p>Next step: confirm all 27 numbered PNG files exist and adjust <code>totalSlides</code> / <code>imageFolder</code> in the embedded script if you rename and relocate the folder.</p>
         </div>
       </div>
     </section>
@@ -38,18 +38,23 @@
     <section class="project-gallery">
       <div class="gallery-container">
         <h2>Slide Deck Viewer</h2>
-        <div class="pdf-deck">
-          <div class="pdf-controls">
-            <button id="prev-slide" aria-label="Previous slide">← Prev</button>
-            <span>Slide <strong id="page-num">1</strong> / <strong id="total-pages">27</strong></span>
-            <label class="page-jump" for="jump-to">Jump to</label>
-            <input id="jump-to" type="number" min="1" max="27" value="1" aria-label="Jump to slide" />
-            <button id="next-slide" aria-label="Next slide">Next →</button>
-            <button id="fullscreen" aria-label="Toggle fullscreen">Fullscreen</button>
+        <div class="pdf-deck slide-deck" id="slide-deck-container">
+          <div class="slide-deck-wrapper" id="slide-deck" aria-label="Slide deck viewer">
+            <button class="nav-button nav-prev" id="prev-slide" aria-label="Previous slide">◀</button>
+            <div class="slide-frame" id="slide-frame">
+              <img id="deck-image" src="../img/pinterest/1.png" alt="Slide 1 of 27" loading="lazy" />
+              <div class="slide-overlay" id="slide-overlay">
+                <span id="slide-label">Slide 1 / 27</span>
+              </div>
+            </div>
+            <button class="nav-button nav-next" id="next-slide" aria-label="Next slide">▶</button>
           </div>
-          <canvas id="pdf-canvas"></canvas>
-          <p class="alt-text" id="pdf-status">Loading 27 slides...</p>
-          <p class="alt-text">If your browser does not render PDFs via the built-in viewer, you can open the file directly: <a href="../img/Pinterest Brand Strategy All Slides.pdf" target="_blank">Open PDF</a>.</p>
+          <div class="slide-controls">
+            <button id="fullscreen" aria-label="Toggle fullscreen">Fullscreen</button>
+            <label for="jump-to">Jump to</label>
+            <input id="jump-to" type="number" min="1" max="27" value="1" aria-label="Jump to slide" />
+          </div>
+          <p class="alt-text" id="slide-status">Loading slides...</p>
         </div>
       </div>
     </section>
@@ -60,121 +65,93 @@
     <small>© <span id="year"></span> Hub of Fascination</small>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.13.122/pdf.min.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const deckSource = '../img/Pinterest Brand Strategy All Slides.pdf';
-    const expectedTotal = 27;
-    const pageNumEl = document.getElementById('page-num');
-    const totalPagesEl = document.getElementById('total-pages');
-    const statusEl = document.getElementById('pdf-status');
-    const canvas = document.getElementById('pdf-canvas');
-    const ctx = canvas.getContext('2d');
-    let pdfDoc = null;
-    let currentPage = 1;
-    let isRendering = false;
-    let pendingPage = null;
-    const scale = 1.2;
+    const totalSlides = 27;
+    const imageFolder = '../img/pinterest/';
+    let currentSlide = 1;
 
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.13.122/pdf.worker.min.js';
-    totalPagesEl.textContent = expectedTotal;
+    const deckImage = document.getElementById('deck-image');
+    const slideLabel = document.getElementById('slide-label');
+    const statusEl = document.getElementById('slide-status');
+    const jumpInput = document.getElementById('jump-to');
+    const prevButton = document.getElementById('prev-slide');
+    const nextButton = document.getElementById('next-slide');
+    const slideFrame = document.getElementById('slide-frame');
+    const deckContainer = document.getElementById('slide-deck-container');
 
-    function renderPage(pageNum) {
-      isRendering = true;
-      statusEl.textContent = `Rendering slide ${pageNum} / ${expectedTotal}...`;
-      pdfDoc.getPage(pageNum).then(page => {
-        const viewport = page.getViewport({ scale });
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
-        const renderContext = { canvasContext: ctx, viewport };
-        const renderTask = page.render(renderContext);
-        renderTask.promise.then(() => {
-          isRendering = false;
-          pageNumEl.textContent = pageNum;
-          statusEl.textContent = '';
-          if (pendingPage !== null) {
-            renderPage(pendingPage);
-            pendingPage = null;
-          }
-        });
-      }).catch(err => {
-        statusEl.textContent = 'Could not load slide deck. Please confirm the PDF is in projects/pinterest-brand-strategy.pdf';
-        console.error(err);
-      });
+    function getSlideSrc(slide) {
+      return `${imageFolder}${slide}.png`;
     }
 
-    function queueRender(pageNum) {
-      if (isRendering) {
-        pendingPage = pageNum;
+    function updateUI() {
+      slideLabel.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+      jumpInput.value = currentSlide;
+      prevButton.disabled = currentSlide === 1;
+      nextButton.disabled = currentSlide === totalSlides;
+    }
+
+    function setSlide(slide) {
+      const clamped = Math.max(1, Math.min(totalSlides, slide));
+      if (clamped === currentSlide && deckImage.src.includes(getSlideSrc(clamped))) return;
+      currentSlide = clamped;
+      updateUI();
+      statusEl.textContent = `Loading slide ${currentSlide} of ${totalSlides}...`;
+      deckImage.classList.add('loading');
+      const src = getSlideSrc(currentSlide);
+      deckImage.onload = () => {
+        statusEl.textContent = '';
+        deckImage.classList.remove('loading');
+      };
+      deckImage.onerror = () => {
+        statusEl.textContent = `Missing image for slide ${currentSlide}. Check terminal file names in img/pinterest/`;
+        deckImage.classList.remove('loading');
+      };
+      deckImage.src = src;
+      deckImage.alt = `Slide ${currentSlide} of ${totalSlides}`;
+    }
+
+    function moveSlide(delta) {
+      setSlide(currentSlide + delta);
+    }
+
+    prevButton.addEventListener('click', () => moveSlide(-1));
+    nextButton.addEventListener('click', () => moveSlide(1));
+
+    jumpInput.addEventListener('change', (event) => {
+      const value = Number(event.target.value);
+      if (Number.isNaN(value)) return;
+      setSlide(value);
+    });
+
+    slideFrame.addEventListener('click', (event) => {
+      const rect = slideFrame.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      if (x < rect.width / 2) {
+        moveSlide(-1);
       } else {
-        renderPage(pageNum);
+        moveSlide(1);
       }
-    }
-
-    function showPage(offset) {
-      const target = currentPage + offset;
-      if (target < 1 || target > expectedTotal) return;
-      currentPage = target;
-      queueRender(currentPage);
-    }
-
-    document.getElementById('prev-slide').addEventListener('click', () => showPage(-1));
-    document.getElementById('next-slide').addEventListener('click', () => showPage(1));
-
-    pdfjsLib.getDocument(deckSource).promise.then(document => {
-      pdfDoc = document;
-      if (pdfDoc.numPages !== expectedTotal) {
-        totalPagesEl.textContent = pdfDoc.numPages;
-        document.getElementById('jump-to').max = pdfDoc.numPages;
-      }
-      currentPage = 1;
-      queueRender(currentPage);
-    }).catch(err => {
-      statusEl.textContent = 'Error loading PDF. Verify file path and format.';
-      console.error(err);
     });
 
-    function setPage(pageNum) {
-      const total = pdfDoc ? pdfDoc.numPages : expectedTotal;
-      const valid = Math.min(Math.max(pageNum, 1), total);
-      currentPage = valid;
-      document.getElementById('jump-to').value = valid;
-      queueRender(valid);
-    }
-
-    document.getElementById('jump-to').addEventListener('change', (e) => {
-      setPage(Number(e.target.value));
-    });
-
-    document.body.addEventListener('keydown', (e) => {
-      if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-      if (e.key === 'ArrowRight') {
-        showPage(1);
-      } else if (e.key === 'ArrowLeft') {
-        showPage(-1);
-      } else if (e.key === 'Home') {
-        setPage(1);
-      } else if (e.key === 'End') {
-        setPage(pdfDoc ? pdfDoc.numPages : expectedTotal);
-      }
+    document.body.addEventListener('keydown', (event) => {
+      if (['INPUT', 'TEXTAREA', 'BUTTON'].includes(document.activeElement.tagName)) return;
+      if (event.key === 'ArrowRight') moveSlide(1);
+      if (event.key === 'ArrowLeft') moveSlide(-1);
+      if (event.key === 'Home') setSlide(1);
+      if (event.key === 'End') setSlide(totalSlides);
     });
 
     document.getElementById('fullscreen').addEventListener('click', () => {
-      const node = document.querySelector('.pdf-deck');
       if (document.fullscreenElement) {
-        document.exitFullscreen();
+        document.exitFullscreen().catch(() => {});
       } else {
-        node.requestFullscreen().catch(() => {});
+        deckContainer.requestFullscreen().catch(() => {});
       }
     });
 
-    window.addEventListener('scroll', () => {
-      const heroText = document.querySelector('.project-hero-text');
-      if (!heroText) return;
-      if (window.scrollY > 100) heroText.classList.add('fade-out');
-      else heroText.classList.remove('fade-out');
-    });
+    setSlide(1);
   </script>
 </body>
 </html>
