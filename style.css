@@ -170,6 +170,14 @@ ul{margin:0;padding:0;list-style:none}
   font-size: 0.875rem;
 }
 
+.category-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0 0 20px 0;
+  grid-column: 1 / -1;
+}
+
 /* Remove underline on hover completely */
 .project-link:hover {
   text-decoration: none;
