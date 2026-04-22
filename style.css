@@ -94,80 +94,14 @@ ul{margin:0;padding:0;list-style:none}
   max-width: var(--max-width);
   margin: 0 auto;
   padding: var(--gap) clamp(18px, 4vw, 40px);
+  display: block;
+}
+
+.category-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 40px;
-}
-
-.project-card {
-  background: transparent;
-  border-radius: 0; /* no rounding */
-  overflow: hidden;
-}
-
-/* Project link wrapper */
-.project-link {
-  display: block;
-  text-decoration: none; /* remove underline */
-  color: inherit;        /* text stays white or muted */
-}
-
-/* Thumbnail container */
-.thumb {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Image inside thumbnail */
-.thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.6s cubic-bezier(.2,.9,.2,1);
-}
-
-/* Full gradient overlay */
-.thumb::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.6)); /* fully covers */
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  pointer-events: none;
-}
-
-/* Hover effect: show full gradient */
-.project-card:hover .thumb::after {
-  opacity: 1;
-}
-
-/* Meta text below image */
-.meta {
-  padding: 14px 12px;
-}
-
-/* Titles and roles */
-.project-title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.project-role {
-  margin: 8px 0 0;
-  color: var(--muted);
-  font-size: 0.875rem;
+  margin-bottom: 40px; /* space between categories */
 }
 
 .category-title {
@@ -175,7 +109,6 @@ ul{margin:0;padding:0;list-style:none}
   font-weight: 700;
   line-height: 1.1;
   margin: 0 0 20px 0;
-  grid-column: 1 / -1;
 }
 
 /* Remove underline on hover completely */
@@ -185,7 +118,7 @@ ul{margin:0;padding:0;list-style:none}
 
 /* Responsive adjustments */
 @media (max-width: 700px) {
-  .projects {
+  .category-grid {
     grid-template-columns: 1fr;
     gap: 28px;
   }
